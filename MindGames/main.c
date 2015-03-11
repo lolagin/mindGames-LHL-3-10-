@@ -25,7 +25,7 @@ bool isRunning = true;
 
 int input, answer, question1, question2, wrong;
 
-Player resetPlayer (Player name);
+void resetPlayers ();
 void mainMenu();
 void setNames();
 void question();
@@ -78,17 +78,14 @@ void setNames() {
 
 
 void question () {
-    player1 = resetPlayer(player1);
-    player2 = resetPlayer(player2);
-    printf("yojimbo");
+    resetPlayers();
     bool isLives = (player1.lives == 0 || player2.lives == 0);
+    printf("islives???:  %d", isLives);
     bool turn = true;
     int i = 0;
         Player currentPlayer;
     
-    while (isLives) {
-
-    
+    while (!isLives) {
         i++;
 
             if (turn) {
@@ -110,7 +107,7 @@ void question () {
             printf("wrong!\n ");
             currentPlayer.lives--;
             printf("you have %d lives!\n", currentPlayer.lives);
-            turn = !(turn);
+            turn = !turn;
         }
     }
     char loser;
@@ -129,11 +126,12 @@ void question () {
 }
 
 
-Player resetPlayer (Player name){
-    name.lives = 3;
-    name.points = 0;
-    name.name = name.name;
-    return name;
+void resetPlayers (){
+    player1.points = 0;
+    player1.lives = 3;
+    player2.points = 0;
+    player2.lives = 3;
+    
 }
 
 
