@@ -8,54 +8,134 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
+#include <stdbool.h>
 
+
+
+typedef struct {
+    int lives;
+    int points;
+    char name;
+} Player;
+
+Player player1;
+Player player2;
+
+bool isRunning = true;
 
 int input, answer, question1, question2, wrong;
 
+Player resetPlayer (Player name);
+void mainMenu();
+void setNames();
+void question();
 
-int mainMenu(int input){
-    printf("Welcome to Zach's Math Game!\n");
+
+
+int main() {
+#pragma mark isRunning
+    while (isRunning) {
+        
+        setNames();
+       
+        
+        }
+        
+    
+    
+    return 0;
+}
+
+
+
+void mainMenu(){
+    int input;
+    printf("Welcome to our Math Game!\n");
+    
     printf("Press 1 to start the game\n");
     printf("Press 2 to exit\n");
     
     scanf("%d", &input);
+    if (input == 2) {
+        isRunning = false;
+    }
+    else if (input == 1) {
+        question();
+    }
     
-    question1 = arc4random() %21;
-    question2 = arc4random() %21;
-    if (input == 1) {
-        printf("Question 1: %d + %d\n", question1, question2);
-        
+}
+
+void setNames() {
+    printf("Welcome to our Math Game!\n");
+    printf("Please enter player 1's name\n");
+    scanf("%s", &player1.name);
+    printf("Please enter player 2's name\n");
+    scanf("%s", &player2.name);
+    printf("Hello, %s and %s\n", &player1.name, &player2.name);
+    mainMenu();
+    
+}
+
+
+void question () {
+    player1 = resetPlayer(player1);
+    player2 = resetPlayer(player2);
+    printf("yojimbo");
+    bool isLives = (player1.lives == 0 || player2.lives == 0);
+    bool turn = true;
+    int i = 0;
+        Player currentPlayer;
+    
+    while (isLives) {
+
+    
+        i++;
+
+            if (turn) {
+                currentPlayer = player1; }
+            else {
+                currentPlayer = player2; }
+
+        question1 = arc4random() %21;
+        question2 = arc4random() %21;
+
+        printf("%c: Question %d: %d + %d\n", currentPlayer.name, i, question1, question2);
         scanf("%d", &answer);
         if (question1 + question2 == answer) {
             printf("correct!\n");
-            wrong = 0;
+            currentPlayer.points++;
+            turn = !turn;
         }
         else {
             printf("wrong!\n ");
-            wrong = 1;
-            
-            
+            currentPlayer.lives--;
+            printf("you have %d lives!\n", currentPlayer.lives);
+            turn = !(turn);
         }
-        
     }
-    if (input == 2) {
-        exit(0);
-    }
-    
-    return 0;
-    
+    char loser;
+    char winner;
+    int winPoints;
+    if (player1.points == 0){
+        loser = player1.name;
+        winner = player2.name;
+        winPoints = player2.points;}
+    else {
+        loser = player2.name;
+        winner = player1.name;
+    winPoints = player1.points;}
+    printf("GAME OVER!\n%s is the LOSER; %s wins with %d points!!! see ya next time!\n",&loser, &winner, winPoints);
+    mainMenu();
 }
 
 
-int main() {
-    mainMenu(input);
-    
-    if (mainMenu(wrong = 1)) {
-        mainMenu(input);
-    }
-    
-    
-    
-    return 0;
+Player resetPlayer (Player name){
+    name.lives = 3;
+    name.points = 0;
+    name.name = name.name;
+    return name;
 }
+
+
+
+
